@@ -1,0 +1,12 @@
+[submodule "agentSDK"]
+	path = agentSDK
+	url = https://github.com/BizShuk/agentSDK.git
+[submodule "auth"]
+	path = auth
+	url = https://github.com/BizShuk/auth.git
+[submodule "proxy"]
+	path = proxy
+	url = https://github.com/BizShuk/proxy.git
+[submodule "conversation_agent"]
+	path = conversation_agent
+	url = https://github.com/BizShuk/conversation_agent.git
