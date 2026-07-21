@@ -26,3 +26,6 @@
 	path = m-agent
 	url = https://github.com/BizShuk/m-agent.git
 	branch = master
+[submodule "skills"]
+	path = skills
+	url = https://github.com/bizshuk/skills
