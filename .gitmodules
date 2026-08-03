@@ -30,3 +30,7 @@
 	path = skills
 	url = https://github.com/bizshuk/skills
 	branch = master
+[submodule "customer_service"]
+	path = customer_service
+	url = https://github.com/BizShuk/customer_service.git
+	branch = master
