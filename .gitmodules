@@ -18,3 +18,7 @@
 	path = customer_service
 	url = https://github.com/BizShuk/customer_service.git
 	branch = master
+[submodule "cc-plugin"]
+	path = cc-plugin
+	url = https://github.com/bizshuk/cc-plugin.git
+	branch = master
