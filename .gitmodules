@@ -6,10 +6,6 @@
 	path = conversation_agent
 	url = https://github.com/BizShuk/conversation_agent.git
 	branch = master
-[submodule "msgHub"]
-	path = msgHub
-	url = https://github.com/BizShuk/msgHub
-	branch = master
 [submodule "m-agent"]
 	path = m-agent
 	url = https://github.com/BizShuk/m-agent.git
