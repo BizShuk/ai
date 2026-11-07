@@ -11,7 +11,7 @@
         "{**/.git,**/.geminiignore,**/.gitlab,**/.gitkeep,.pre-commit-config.yaml}": true,
         "{**/.classpath,**/.project,**/.settings,**/.antigravity,**/.playwright-cli,**/.devops}": true,
         "{*.bak*}": true,
-        "{**/AGENTS.md,**/GEMINI.md}": true,
+        "**/GEMINI.md": true,
         "{**/.agents}": true,
         "{**/.geminiignore,**/.claudeignore}": true,
         "{**/*_test.go,**/*.test.ts,go.sum}": true

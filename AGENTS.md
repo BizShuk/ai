@@ -18,7 +18,7 @@ ai/
 ├── plans/               # 空目錄，分類層計畫預留位置，目前無檔案
 ├── .agents/             # 空目錄，分類層 agent 設定預留位置，目前無檔案
 ├── .claude-plugin/      # Claude Code plugin manifest（分類層唯一入版控的設定）
-├── .vscode/             # 工作區編輯器設定（files.exclude 過濾 build 產物與 AGENTS.md 等 symlink 噪音）
+├── .vscode/             # 工作區編輯器設定（files.exclude 過濾 build 產物與代理設定噪音）
 ├── .gitignore           # 工作區共用的 Universal Ignore Template
 └── .gitmodules          # 五個 submodule 的 path / url / branch 宣告
 ```
@@ -55,7 +55,7 @@ git submodule status                    # 檢視每個 submodule 的 SHA 與檢�
 
 - `分類層不放程式碼`。任何 `.go` / `.ts` / `.py` 都屬於某個專案，不屬於分類。
 - `每個專案自帶統一介面 (Unified Interface)`：`README.md`（業務定義）、
-  `CLAUDE.md`（技術脈絡）、`AGENTS.md`（symlink → `CLAUDE.md`）、`README.todo`、
+  `AGENTS.md`（技術脈絡，實體檔；不得有 `CLAUDE.md`）、`README.todo`、
   `docs/terminology.md`、`docs/memory/`。分類層`不`複製各專案的結構樹或術語，
   只留一行指標指過去。
 - `提交邊界`：子專案的變更在子專案 repo 內提交；分類層只提交 submodule pointer
@@ -68,7 +68,7 @@ git submodule status                    # 檢視每個 submodule 的 SHA 與檢�
 | 路徑 | 用途 |
 | ---- | ---- |
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest，plugin 名稱 `ai` / displayName `AI Workspace`，用途是把各 submodule 維護的可重用 skills 聚合成一個工作區 plugin |
-| `.vscode/settings.json` | 只有 `files.exclude`：隱藏 `.git`、build 產物（`dist`/`out`/`target`）、`node_modules`、`__pycache__`、`*_test.go`，以及 `AGENTS.md` / `GEMINI.md` / `.agents` 這類 symlink 與代理設定噪音 |
+| `.vscode/settings.json` | 只有 `files.exclude`：隱藏 `.git`、build 產物（`dist`/`out`/`target`）、`node_modules`、`__pycache__`、`*_test.go`，以及 `GEMINI.md` / `.agents` 這類 symlink 與代理設定噪音 |
 | `.gitignore` | 工作區共用的 Universal Ignore Template（同一份內容也用於 `.geminiignore` / `.claudeignore`，後兩者作為 LLM 語境過濾） |
 | `plans/` `.agents/` `model/` | 目前皆空。`plans/` 依工作區慣例放 `YYYY-MM-DD-<topic>.md` 分類層計畫；`model/` 用途未偵測到 (Not detected) |
 
