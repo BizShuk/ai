@@ -6,6 +6,7 @@
 - 直接面對終端使用者的語音 agent 產品（`conversation_agent`、`customer_service`）
 - 既有 agent 引擎的分發與編排層（`m-agent`）
 - 讓 AI 編碼代理本身更好用的工作區設定與工具（`cc-plugin`）
+- 把 MiniMax 媒體能力包成 OpenAI / Anthropic 相容 API 的閘道（`stts`）
 
 `ai/` 本身是`容器 (container)`，不放任何程式碼；每個專案是獨立 git repo，
 以 git submodule 掛在本目錄下，各自持有完整的統一介面 (Unified Interface) 文件。
@@ -19,6 +20,7 @@
 | [conversation_agent](conversation_agent/) | 多主題 AI 語音對話服務：以 `Gemini Live API` 原生語音即時回答，內容型問題受知識庫約束、時長由 server 強制限制 | Go + `google.golang.org/genai` + pgvector；前端 Vite + TypeScript | submodule |
 | [customer_service](customer_service/) | 網頁客服語音 agent：使用者以語音提問產品問題，只在 `scope/` 定義的範圍內回答，範圍外回固定文案 | Go + `bizshuk/agentsdk`；語音走 `ElevenLabs` (STT/TTS) 與 `MiniMax` (TTS) 級聯 | submodule |
 | [m-agent](m-agent/) | `picoclaw` 引擎之上的分發／編排層，只放 customized 的編排、設定與測試資產 | Docker Compose + Python 測試 harness；引擎 `picoclaw` 為 Go（第三層 submodule） | submodule |
+| [stts](stts/) | MiniMax 語音 / 影像 / 翻譯閘道：以 OpenAI (audio, images, chat) 與 Anthropic Messages 相容 API 對外，靜態 API key 存取 | Go + `bizshuk/agentsdk` (go.mod require tag) + gosdk；liva 容器 | submodule |
 | `model/` | 空目錄，未偵測到內容 (Not detected) | — | plain dir |
 
 ## 專案關聯 (Project Relationships)
@@ -30,9 +32,11 @@ flowchart LR
     CA["conversation_agent<br/>(多主題語音對話服務)"]
     MA["m-agent<br/>(分發／編排層)"]
     PC["picoclaw<br/>(引擎, 第三層 submodule)"]
+    ST["stts<br/>(MiniMax 媒體閘道)"]
     CC["cc-plugin<br/>(工作區設定與工具)<br/>— 與其他專案無相依"]
 
     CS -->|"go.work use ../agentSDK"| SDK
+    ST -->|"go.mod require tag"| SDK
     MA -->|"submodule + build context"| PC
     CA -.->|"同領域, 無程式碼相依"| CS
 ```
@@ -42,6 +46,8 @@ flowchart LR
   與 `provider/{anthropic, elevenlabs, minimax}`。`agentsdk` 未發布，
   因此 `customer_service/go.mod` 沒有對應的 `require` —— 相依由 `go.work` 解析，
   `agentSDK` submodule 沒 init 就 build 不起來。
+- `stts` → `agentSDK`：以 go.mod `require` 釘 agentSDK release tag（非 go.work）。
+  MiniMax wire 細節全在 agentSDK minimax adapter，stts 缺能力時先擴充 agentSDK、打 tag、再升版。
 - `conversation_agent` ↔ `customer_service`：`同業務領域、不同引擎`，彼此無相依。
   前者以 Gemini Live 原生語音直連（speech-to-speech），後者以 agentsdk 驅動推理
   並用級聯 (cascade) STT/TTS 組出語音層。兩者的 scope 約束與 session 時長硬限制

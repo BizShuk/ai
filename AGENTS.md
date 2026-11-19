@@ -1,7 +1,7 @@
 # ai — 技術脈絡 (Technical Context)
 
 `ai/` 是`分類目錄 (category)`，不是專案：它`不含任何程式碼`，只以 git submodule
-聚合五個獨立 repo。業務導覽與專案關聯見 [README.md](README.md)。
+聚合六個獨立 repo。業務導覽與專案關聯見 [README.md](README.md)。
 
 分類深度固定一層 —— 不得出現 `ai/<category>/<project>`。
 
@@ -14,13 +14,14 @@ ai/
 ├── conversation_agent/  # submodule → github.com/BizShuk/conversation_agent (branch master)
 ├── customer_service/    # submodule → github.com/BizShuk/customer_service   (branch master)
 ├── m-agent/             # submodule → github.com/BizShuk/m-agent       (branch master;內含第三層 submodule picoclaw/)
+├── stts/                # submodule → github.com/BizShuk/stts          (branch master, private)
 ├── model/               # 空目錄，未被 git 追蹤（git 不追蹤空目錄）
 ├── plans/               # 空目錄，分類層計畫預留位置，目前無檔案
 ├── .agents/             # 空目錄，分類層 agent 設定預留位置，目前無檔案
 ├── .claude-plugin/      # Claude Code plugin manifest（分類層唯一入版控的設定）
 ├── .vscode/             # 工作區編輯器設定（files.exclude 過濾 build 產物與代理設定噪音）
 ├── .gitignore           # 工作區共用的 Universal Ignore Template
-└── .gitmodules          # 五個 submodule 的 path / url / branch 宣告
+└── .gitmodules          # 六個 submodule 的 path / url / branch 宣告
 ```
 
 分類層`入版控的檔案只有四個`：`.gitmodules`、`.gitignore`、
@@ -37,12 +38,12 @@ git submodule update --init --recursive m-agent   # m-agent 需 --recursive 才�
 git submodule status                    # 檢視每個 submodule 的 SHA 與檢出狀態
 ```
 
-- `目前五個 submodule 全部已初始化`，沒有未初始化項目。
+- `目前六個 submodule 全部已初始化`，沒有未初始化項目。
 - `git submodule status` 前綴 `+` 表示檢出的 commit 與 superproject 記錄的 SHA
   不一致（在子專案內提交後、尚未在分類層 `git add <name>` 推進 pointer 的正常狀態）。
 - 分類層記錄的是 commit `SHA` 而非分支內容；他處 clone 前，該 SHA 必須已存在於
   子專案的 `origin`，否則 `submodule update` 會失敗。
-- `agentSDK` 目前釘在 tag `v0.0.60`；其餘四個追各自的 `master`。
+- `agentSDK` 目前釘在 tag `v0.0.60`；其餘五個追各自的 `master`。
 
 ### 第三層 submodule
 
